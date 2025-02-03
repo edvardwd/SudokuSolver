@@ -47,7 +47,7 @@ void Grid::draw(){
 
 void Grid::handleInput(){
     for (auto& tile : tiles){
-        bool selected = tile->isClicked();
+        bool selected = tile->isClicked() && tile->changeable;
         if (selected && this->currentSelected == tile){
             this->currentSelected = nullptr;
             tile->setColor(WHITE);
@@ -97,9 +97,11 @@ void Grid::handleInput(){
         this->board = this->initialBoard;
         this->updateVisual();
     }
+    /*
     if (this->isSolved() && !this->autoSolved){
         cout << "Congratulations, you solved the board!" << endl;
     }
+    */
 }
 
 

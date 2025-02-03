@@ -59,7 +59,13 @@ bool isLegal(vector<vector<int>> board, int row, int col, int num){
 }
 
 
-bool solve(vector<vector<int>>& board, int row, int col){
+bool solve(vector<vector<int>>& board, int row, int col, bool print, bool randomOrder){
+    //for "guessing" in random order
+    random_device rd;
+    mt19937 generator(rd());
+    vector<int> nums{1, 2, 3, 4, 5, 6, 7, 8, 9};
+    shuffle(nums.begin(), nums.end(), generator);
+
     if (row == board.size()){
         return true;
     }
@@ -70,10 +76,12 @@ bool solve(vector<vector<int>>& board, int row, int col){
         return solve(board, row, col + 1);
     }
     else{
-        for (int k = 1; k <= board.size(); k++){
+        for (int i = 1; i <= 9; i++){
+            int k;
+            k = randomOrder ? nums.at(i - 1) : i; //guesses in random or "proper" order
             if (isLegal(board, row, col, k)){
                 board.at(row).at(col) = k;
-                printBoard(board);
+                if (print) printBoard(board);
 
                 if (solve(board, row, col)){
                     return true;
@@ -83,4 +91,34 @@ bool solve(vector<vector<int>>& board, int row, int col){
         }
         return false;
     }
+}
+
+pair<int, int> getRandomCell(){
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(1, 9);
+
+    return {distribution(generator), distribution(generator)};
+}
+
+vector<vector<int>> generateBoard(Difficulty difficulty){
+    vector<vector<int>> board(9, vector<int>(9)); //empty board
+    solve(board, 0, 0, true, true);
+    
+    int toRemove;
+    if (difficulty == Difficulty::easy) toRemove = 40;
+    else if (difficulty == Difficulty::medium) toRemove = 50;
+    else toRemove = 60;
+
+    while (toRemove > 0){
+        auto [row, col]  = getRandomCell();
+        if (board.at(row - 1).at(col - 1) != 0){
+            board.at(row - 1).at(col - 1) = 0;
+            toRemove--;
+        }
+    }
+    vector<vector<int>> boardCopy = board;
+    if (!solve(boardCopy)) return generateBoard(difficulty); //ensure that the board is solvable
+
+    return board;
 }

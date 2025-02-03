@@ -26,7 +26,7 @@ int main(){
     assert(board.size() == board.at(0).size());
     printBoard(board);
     //cout << boolalpha << solve(board) << endl;
-
+    board = generateBoard(Difficulty::easy);
     
     Grid grid{{50, 50}, 500, 500, board};
     InitWindow(800, 600, "Sudoku");
