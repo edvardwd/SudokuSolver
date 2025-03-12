@@ -24,11 +24,12 @@ class Grid{
         const int nRows = 9, nCols = 9;
 
         vector<vector<int>> board;
-        const vector<vector<int>> initialBoard;
+        vector<vector<int>> initialBoard;
         vector<shared_ptr<Tile>> tiles;
         shared_ptr<Tile> currentSelected;
         Button solveButton;
         Button resetButton;
+        Button newBoardButton;
 
         void showSolved();
         bool autoSolved;

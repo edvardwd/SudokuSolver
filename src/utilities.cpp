@@ -60,6 +60,8 @@ bool isLegal(vector<vector<int>> board, int row, int col, int num){
 
 
 bool solve(vector<vector<int>>& board, int row, int col, bool print, bool randomOrder){
+    //to-do: add check for more soultions, i.e., check for two solutions
+
     //for "guessing" in random order
     random_device rd;
     mt19937 generator(rd());
@@ -96,7 +98,7 @@ bool solve(vector<vector<int>>& board, int row, int col, bool print, bool random
 pair<int, int> getRandomCell(){
     random_device rd;
     mt19937 generator(rd());
-    uniform_int_distribution<int> distribution(1, 9);
+    uniform_int_distribution<int> distribution(0, 8);
 
     return {distribution(generator), distribution(generator)};
 }
@@ -106,14 +108,14 @@ vector<vector<int>> generateBoard(Difficulty difficulty){
     solve(board, 0, 0, true, true);
     
     int toRemove;
-    if (difficulty == Difficulty::easy) toRemove = 40;
+    if (difficulty == Difficulty::easy) toRemove = 44;
     else if (difficulty == Difficulty::medium) toRemove = 50;
     else toRemove = 60;
 
     while (toRemove > 0){
         auto [row, col]  = getRandomCell();
-        if (board.at(row - 1).at(col - 1) != 0){
-            board.at(row - 1).at(col - 1) = 0;
+        if (board.at(row).at(col) != 0){
+            board.at(row).at(col) = 0;
             toRemove--;
         }
     }

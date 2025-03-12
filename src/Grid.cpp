@@ -8,6 +8,8 @@ Grid::Grid(Point topLeft, int width, int height, vector<vector<int>> initBoard) 
                                          cellSize*3, cellSize, "SOLVE", GREEN, true};
                 this->resetButton = Button{{topLeft.x + (nRows + 1)*cellSize, topLeft.y + 2*cellSize},
                                          cellSize*3, cellSize, "RESET", ORANGE, true};
+                this->newBoardButton = Button{{topLeft.x + (nRows + 1)*cellSize, topLeft.y + 3*cellSize},
+                                         cellSize*3, cellSize, "NEW", BLUE, true};
 
                 for (int i = 0; i < board.size(); i++){
                     for (int j = 0; j < board.at(0).size(); j++){
@@ -43,6 +45,7 @@ void Grid::draw(){
     }
     this->solveButton.draw();
     this->resetButton.draw();
+    this->newBoardButton.draw();
 }
 
 void Grid::handleInput(){
@@ -96,6 +99,25 @@ void Grid::handleInput(){
         this->autoSolved = false;
         this->board = this->initialBoard;
         this->updateVisual();
+    }
+
+    if (this->newBoardButton.isClicked()){
+        //To-do - make choice of difficulty available
+        this->board = generateBoard(Difficulty::easy);
+        this->initialBoard = this->board;
+        //essentially a copy of the constructor
+        this->tiles.clear();
+        for (int i = 0; i < board.size(); i++){
+            for (int j = 0; j < board.at(0).size(); j++){
+                int tileX = topLeft.x + cellSize * j;
+                int tileY = topLeft.y + cellSize * i;
+                int val = board.at(i).at(j);
+                Color color = (val == 0) ? WHITE : RAYWHITE;
+
+                tiles.emplace_back(new Tile{{tileX, tileY}, cellSize,  color, i, j, val});
+            }
+        } 
+        this->updateVisual(); 
     }
     /*
     if (this->isSolved() && !this->autoSolved){
@@ -164,6 +186,7 @@ void Grid::updateVisual(){
         for (int j = 0; j < nCols; j++){
             this->tiles.at(i*nRows+ j)->setValue(this->board.at(i).at(j));
             if (this->tiles.at(i*nRows+ j)->changeable) this->tiles.at(i*nRows + j)->setColor(WHITE);
+            else this->tiles.at(i*nRows+ j)->setColor(RAYWHITE);
         }
     }
 }
