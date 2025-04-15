@@ -24,10 +24,12 @@ Grid::Grid(Point topLeft, int width, int height, vector<vector<int>> initBoard) 
 }
 
 void Grid::draw(){
+    // Draw the tiles
     for (const auto& tile : tiles){
         tile->draw();
     }
 
+    // Draw lines
     for (int i = 0; i <= nRows; i++){
         Color color = LIGHTGRAY;
         if (i % 3 == 0 || i == 0 || i == nRows){
@@ -43,9 +45,13 @@ void Grid::draw(){
         }
         DrawLine(topLeft.x + j * cellSize, topLeft.y, topLeft.x + j * cellSize, topLeft.y + nRows * cellSize, color);
     }
+
+    // Draw buttons
     this->solveButton.draw();
     this->resetButton.draw();
     this->newBoardButton.draw();
+
+    // Display congrats message if the board was solved manually
     if (this->congratulate){
         DrawText("Congratulions!\nBoard solved!", 
             topLeft.x + cellSize*(nRows+1), topLeft.y + cellSize * 4,

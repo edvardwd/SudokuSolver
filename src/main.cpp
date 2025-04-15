@@ -28,8 +28,8 @@ int main(){
     //cout << boolalpha << solve(board) << endl;
     board = generateBoard(Difficulty::easy);
     
-    Grid grid{{50, 50}, 500, 500, board};
-    InitWindow(800, 600, "Sudoku");
+    Grid grid{{50, 50}, 1000, 1000, board};
+    InitWindow(1600, 1200, "Sudoku");
     SetTargetFPS(60);
 
     while (!WindowShouldClose()){

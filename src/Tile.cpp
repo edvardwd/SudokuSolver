@@ -43,15 +43,6 @@ void Tile::setSelected(bool selected){
     this->selected = selected;
 }
 
-/*
-bool Tile::isClicked(){
-    Vector2 mousePos = GetMousePosition();
-    bool pressed = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
-    bool hover = CheckCollisionPointRec(mousePos, this->rect);
-    return (hover && pressed && this->changeable) ? true : false;
-}
-*/
-
 void Tile::takeInput(){
     int key = GetCharPressed();
     if (key >= 48 && key <= 57){

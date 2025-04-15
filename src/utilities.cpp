@@ -60,8 +60,6 @@ bool isLegal(vector<vector<int>> board, int row, int col, int num){
 
 
 bool solve(vector<vector<int>>& board, int row, int col, bool print, bool randomOrder){
-    //to-do: add check for more soultions, i.e., check for two solutions
-
     //for "guessing" in random order
     random_device rd;
     mt19937 generator(rd());
@@ -88,7 +86,7 @@ bool solve(vector<vector<int>>& board, int row, int col, bool print, bool random
                 if (solve(board, row, col)){
                     return true;
                 }
-                board.at(row).at(col) = 0; //undo
+                board.at(row).at(col) = 0; //backtrack
             }
         }
         return false;
@@ -133,16 +131,31 @@ vector<vector<int>> generateBoard(Difficulty difficulty){
     else if (difficulty == Difficulty::medium) toRemove = 50;
     else toRemove = 60;
 
-    while (toRemove){
-        auto [row, col]  = getRandomCell();
+    //Create a vector of all cells shuffled
+    vector<pair<int, int>> cells;
+    for (int i = 0; i < 9; i++){
+        for (int j = 0; j < 9; j++){
+            cells.push_back({i, j});
+        }
+    }
+    random_device rd;
+    mt19937 generator(rd());
+    shuffle(cells.begin(), cells.end(), generator);
+
+    int removed = 0;
+    for (auto [row, col] : cells){
         if (board[row][col] != 0){
             int backup = board[row][col];
             board[row][col] = 0;
 
             vector<vector<int>> boardCopy = board;
-            if (countSolutions(boardCopy) == 1) toRemove--;
+            if (countSolutions(boardCopy) == 1){
+                removed++;
+                if (removed == toRemove) break; // removed enough cells
+            }
             else{
                 // no unique solution -> backtrack
+                cout << "No unique!" << endl;
                 board[row][col] = backup;
             }
         }
