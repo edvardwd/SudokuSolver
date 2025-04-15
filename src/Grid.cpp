@@ -46,6 +46,11 @@ void Grid::draw(){
     this->solveButton.draw();
     this->resetButton.draw();
     this->newBoardButton.draw();
+    if (this->congratulate){
+        DrawText("Congratulions!\nBoard solved!", 
+            topLeft.x + cellSize*(nRows+1), topLeft.y + cellSize * 4,
+             cellSize * 0.5, DARKBROWN);
+    }
 }
 
 void Grid::handleInput(){
@@ -54,7 +59,7 @@ void Grid::handleInput(){
         if (selected && this->currentSelected == tile){
             this->currentSelected = nullptr;
             tile->setColor(WHITE);
-            tile ->setSelected(false);
+            tile->setSelected(false);
         }
         else if (selected){
             if (this->currentSelected != nullptr){
@@ -119,11 +124,9 @@ void Grid::handleInput(){
         } 
         this->updateVisual(); 
     }
-    /*
-    if (this->isSolved() && !this->autoSolved){
-        cout << "Congratulations, you solved the board!" << endl;
-    }
-    */
+    
+    this->congratulate = (this->isSolved() && !this->autoSolved) ? true : false;
+    
 }
 
 

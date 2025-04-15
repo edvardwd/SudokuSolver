@@ -33,5 +33,6 @@ class Grid{
 
         void showSolved();
         bool autoSolved;
+        bool congratulate;
     
 };
