@@ -95,6 +95,27 @@ bool solve(vector<vector<int>>& board, int row, int col, bool print, bool random
     }
 }
 
+int countSolutions(vector<vector<int>>& board, int row, int col){
+    if (row == 9) return 1; //filled board -> count 1 solution
+    if (col == 9) return countSolutions(board, row + 1, 0);
+    if (board[row][col] != 0) return countSolutions(board, row, col + 1);
+
+    int totalSolutions = 0;
+    for (int i = 1; i <= 9; i++){
+        if (isLegal(board, row, col, i)){
+            board[row][col] = i;
+            totalSolutions += countSolutions(board, row, col);
+            board[row][col] = 0; //backtrack
+
+            // Exit early if more than one solution is found
+            if (totalSolutions > 1) return totalSolutions; 
+        }
+    }
+    return totalSolutions;
+}
+
+
+
 pair<int, int> getRandomCell(){
     random_device rd;
     mt19937 generator(rd());
@@ -105,22 +126,27 @@ pair<int, int> getRandomCell(){
 
 vector<vector<int>> generateBoard(Difficulty difficulty){
     vector<vector<int>> board(9, vector<int>(9)); //empty board
-    solve(board, 0, 0, true, true);
+    solve(board, 0, 0, true, true); //ensures a "random board"
     
     int toRemove;
     if (difficulty == Difficulty::easy) toRemove = 44;
     else if (difficulty == Difficulty::medium) toRemove = 50;
     else toRemove = 60;
 
-    while (toRemove > 0){
+    while (toRemove){
         auto [row, col]  = getRandomCell();
-        if (board.at(row).at(col) != 0){
-            board.at(row).at(col) = 0;
-            toRemove--;
+        if (board[row][col] != 0){
+            int backup = board[row][col];
+            board[row][col] = 0;
+
+            vector<vector<int>> boardCopy = board;
+            if (countSolutions(boardCopy) == 1) toRemove--;
+            else{
+                // no unique solution -> backtrack
+                board[row][col] = backup;
+            }
         }
     }
-    vector<vector<int>> boardCopy = board;
-    if (!solve(boardCopy)) return generateBoard(difficulty); //ensure that the board is solvable
 
     return board;
 }
