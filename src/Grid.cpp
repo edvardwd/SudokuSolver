@@ -1,6 +1,14 @@
 #include "Grid.h"
 
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#else
+// Define a dummy function when not compiling with Emscripten
+static void emscripten_sleep(int ms) { /* no-op */ }
+#endif
+
+
 Grid::Grid(Point topLeft, int width, int height, vector<vector<int>> initBoard) : 
             topLeft{topLeft}, gridHeight{height}, gridWidth{width}, cellSize{width / 9}, board{initBoard},
             initialBoard{initBoard}, currentSelected{nullptr}, autoSolved{false} {
@@ -139,6 +147,16 @@ void Grid::handleInput(){
 
 
 bool Grid::solve(int row, int col){
+    static int count = 0;
+    emscripten_sleep(1);   // 1ms delay allows screen updates
+    
+    // Force redraw
+    BeginDrawing();
+    this->draw();
+    ClearBackground(LIGHTGRAY);
+    EndDrawing();
+
+
     if (row == board.size()){
         return true;
     }

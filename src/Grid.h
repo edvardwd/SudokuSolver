@@ -4,6 +4,7 @@
 #include <vector>
 #include "Tile.h"
 #include "Button.h"
+#include <emscripten.h>
 
 using namespace std;
 
