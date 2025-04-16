@@ -98,7 +98,7 @@ int countSolutions(vector<vector<int>>& board, int row, int col){
     if (col == 9) return countSolutions(board, row + 1, 0);
     if (board[row][col] != 0) return countSolutions(board, row, col + 1);
 
-    int totalSolutions = 0;
+    int totalSolutions = 0;   
     for (int i = 1; i <= 9; i++){
         if (isLegal(board, row, col, i)){
             board[row][col] = i;
@@ -112,15 +112,6 @@ int countSolutions(vector<vector<int>>& board, int row, int col){
     return totalSolutions;
 }
 
-
-
-pair<int, int> getRandomCell(){
-    random_device rd;
-    mt19937 generator(rd());
-    uniform_int_distribution<int> distribution(0, 8);
-
-    return {distribution(generator), distribution(generator)};
-}
 
 vector<vector<int>> generateBoard(Difficulty difficulty){
     vector<vector<int>> board(9, vector<int>(9)); //empty board

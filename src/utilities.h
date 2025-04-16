@@ -24,4 +24,3 @@ bool isLegal(vector<vector<int>> board, int row, int col, int num);
 bool solve(vector<vector<int>>& board, int row = 0, int col = 0, bool print = false, bool randomOrder = false);
 int countSolutions(vector<vector<int>>& board, int row = 0, int col = 0);
 vector<vector<int>> generateBoard(Difficulty difficulty);
-pair<int, int> getRandomCell();
