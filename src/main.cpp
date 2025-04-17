@@ -3,7 +3,6 @@
 #include <unordered_set>
 #include <algorithm>
 #include <cmath>
-#include <cassert>
 #include "unistd.h"
 #include "Grid.h"
 #include "Tile.h"
@@ -13,20 +12,8 @@ using namespace std;
 
 
 int main(){
-    cout << "Hello world" << endl;
-    vector<vector<int>> board{{0, 2, 0, 0, 0, 0, 0, 0, 0},
-            {1, 5, 8, 0, 0, 0, 0, 3, 0},
-            {3, 4, 0, 1, 6, 0, 9, 0, 2},
-            {0, 0, 9, 2, 0, 8, 1, 7, 5},
-            {0, 0, 0, 0, 4, 0, 0, 0, 0},
-            {0, 3, 5, 6, 0, 1, 0, 0, 0},
-            {0, 0, 0, 3, 0, 0, 5, 9, 4},
-            {5, 1, 3, 4, 8, 0, 0, 0, 7},
-            {6, 9, 0, 7, 5, 2, 0, 0, 3}};
-    assert(board.size() == board.at(0).size());
-    printBoard(board);
-    //cout << boolalpha << solve(board) << endl;
-    board = generateBoard(Difficulty::easy);
+
+    vector<vector<int>> board = generateBoard(Difficulty::easy);
     
     Grid grid{{50, 50}, 1000, 1000, board};
     InitWindow(1600, 1200, "Sudoku");

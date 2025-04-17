@@ -115,7 +115,7 @@ int countSolutions(vector<vector<int>>& board, int row, int col){
 
 vector<vector<int>> generateBoard(Difficulty difficulty){
     vector<vector<int>> board(9, vector<int>(9)); //empty board
-    solve(board, 0, 0, true, true); //ensures a "random board"
+    solve(board, 0, 0, false, true); //ensures a "random board"
     
     int toRemove;
     if (difficulty == Difficulty::easy) toRemove = 44;
@@ -146,7 +146,7 @@ vector<vector<int>> generateBoard(Difficulty difficulty){
             }
             else{
                 // no unique solution -> backtrack
-                cout << "No unique!" << endl;
+                //cout << "No unique!" << endl;
                 board[row][col] = backup;
             }
         }
