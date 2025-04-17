@@ -1,6 +1,6 @@
 # Visual sudoku solver
-## Simple C++ project to showcase the solving of a Sudoku-board using recursive backtracking.
-The finished product can also be found [here](https://www.edvardwd.folk.ntnu.no/build_web/sudoku.html)
+## C++ project to showcase the solving of a Sudoku-board using recursive backtracking.
+The finished product can also be found [here](https://edvardwd.folk.ntnu.no/build_web/sudoku.html).
 ## How to build and run
 1. Make sure to have [raylib](https://github.com/raysan5/raylib) and [Emscripten](https://github.com/emscripten-core/emsdk) installed.
 2. Clone this project and switch to the web branch
