@@ -7,6 +7,7 @@ body {
     min-height: 100vh;
     background-color:  #C8C8C8;
     overflow: hidden;
+    font-size: large;
 }
 .container {
     text-align: center;
@@ -19,7 +20,6 @@ h1 {
 
 a {
     color: cadetblue;
-    font-size: large;
 }
 
 a:hover {
